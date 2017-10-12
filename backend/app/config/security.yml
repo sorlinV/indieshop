@@ -4,6 +4,8 @@ security:
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
+        webservice:
+            id: AppBundle\Security\User\WebserviceUserProvider
         in_memory:
             memory: ~
 
@@ -22,3 +24,10 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
+        wsse_secured:
+            pattern:   ^/api/
+            stateless: true
+            wsse:      true
+
+    encoders:
+        AppBundle\Security\User\WebserviceUser: bcrypt
