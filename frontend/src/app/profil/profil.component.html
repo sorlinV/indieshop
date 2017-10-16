@@ -1,3 +1,9 @@
-<p>
-  profil works!
-</p>
+<article ng-if="is_editing === true">
+    <form action="">
+        <input type="username" [(ngModel)]="form.username" name="username">
+        <input type="password" [(ngModel)]="form.pass" name="pass">
+        <input type="password" [(ngModel)]="form.pass2" name="pass2">
+        <input type="mail" [(ngModel)]="form.mail" name="mail">
+        <button (click)="update()">Update</button>
+    </form>
+</article>

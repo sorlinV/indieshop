@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../Classes/User';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profil',
@@ -6,10 +8,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profil.component.css']
 })
 export class ProfilComponent implements OnInit {
-
-  constructor() { }
+  private is_editing:boolean = false;
+  private form;
+  constructor(private route:ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.params.subscribe((params) => {
+      this.form = {
+        username: "",
+        pass: "",
+        pass2: "",
+        mail: ""
+      }
+    });
   }
 
 }

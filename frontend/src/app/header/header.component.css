@@ -1,7 +1,6 @@
 header {
     display: flex;
     justify-content: space-between;
-    align-content: center;
     align-items: center;
     height: 3em;
 }
@@ -10,20 +9,29 @@ header ul {
     height: 100%;
     display: flex;
     justify-content: space-around;
-    align-content: center;
-    align-items: center;
-    width-min: 1000px;
+    align-items: 800px;
     width: 50%;
 }
 
 header ul li {
     width: 100%;
     height: 100%;
-    text-align: center;
-    vertical-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-header ul li:hover {
+header a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: black;
     height: 100%;
-    background: rgb(173, 173, 173);
+    width: 100%;
+}
+
+header ul li:hover,
+.active {
+    background: rgb(219, 219, 219);
 }
