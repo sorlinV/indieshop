@@ -14,6 +14,7 @@ export class ProfilComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
+      
       this.form = {
         username: "",
         pass: "",

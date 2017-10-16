@@ -4,16 +4,16 @@ import { Cart } from "./Cart";
 import { Rate } from "./Rate";
 import { Tag } from "./Tag";
 
-export class Game {
-    private name:string;
-    private description:string;
-    private price:number;
-    private imgs:string[];
-    private files:string[];
-    private creators:User[];
-    private buyer:User[];
-    private reports:Report[];
-    private carts:Cart[];
-    private rates:Rate[];
-    private tags:Tag[];
+export interface Game {
+    name:string;
+    description:string;
+    price:number;
+    imgs:string[];
+    files:string[];
+    creators:User[];
+    buyer:User[];
+    reports:Report[];
+    carts:Cart[];
+    rates:Rate[];
+    tags:Tag[];
 }

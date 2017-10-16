@@ -1,7 +1,7 @@
 import { User } from "./User";
 import { Game } from "./Game";
 
-export class Cart {
-    private user:User;
-    private game:Game;
+export interface Cart {
+    user:User;
+    game:Game;
 }

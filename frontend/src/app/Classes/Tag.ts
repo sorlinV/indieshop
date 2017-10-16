@@ -1,6 +1,6 @@
 import { Game } from "./Game";
 
-export class Tag {
+export interface Tag {
     name:string;
     game:Game;
 }
