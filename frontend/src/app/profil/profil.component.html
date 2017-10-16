@@ -1,9 +1,18 @@
-<article ng-if="is_editing === true">
-    <form action="">
+<article *ngIf="is_editing === true">
+    <form action="" (submit)="update()">
+        <label for="username">Username:</label>
         <input type="username" [(ngModel)]="form.username" name="username">
+        <label for="pass">Password:</label>
         <input type="password" [(ngModel)]="form.pass" name="pass">
+        <label for="pass2">Confirm password:</label>
         <input type="password" [(ngModel)]="form.pass2" name="pass2">
+        <label for="mail">mail:</label>
         <input type="mail" [(ngModel)]="form.mail" name="mail">
-        <button (click)="update()">Update</button>
+        <input type="submit" value="Submit" />
     </form>
+</article>
+<article *ngIf="is_editing === false">
+    <p>{{user.username}}</p>
+    <p>{{user.mail}}</p>
+    <input (click)="is_editing = true" type="submit" value="Edit" />
 </article>

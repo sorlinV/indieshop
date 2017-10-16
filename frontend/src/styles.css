@@ -1,7 +1,125 @@
 /* You can add global styles to this file, and also import other style files */
 
+
+/*
+Color of project
+from darkest to brightest
+#00838f
+#0097a7
+#00acc1
+#00bcd4
+#4dd0e1
+*/
+
 * {
     margin: 0;
     padding: 0;
     text-decoration: none;
+    font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+}
+
+
+/*======== NAV ==========
+=========================
+========= LOGO ==========
+=========================
+=======================*/
+
+#logo {
+    height: 80%;
+    margin-left: 2%;
+}
+
+@keyframes logo_anim {
+    from {
+        -ms-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+#logo:hover {
+    animation-name: logo_anim;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+
+/*=======================
+=========================
+======== Buttons ========
+=========================
+=======================*/
+
+[role="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+    background: none;
+    border: 0;
+    color: inherit;
+    /* cursor: default; */
+    font: inherit;
+    line-height: normal;
+    overflow: visible;
+    padding: 0;
+    -webkit-appearance: button;
+    /* for input */
+    -webkit-user-select: none;
+    /* for button */
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+[role="button"] {
+    color: inherit;
+    cursor: default;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    white-space: pre;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+[role="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+    color: white;
+    background: #00acc1;
+    border-radius: 3px;
+    padding: 0.7%;
+}
+
+[role="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+button:hover {
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 }
