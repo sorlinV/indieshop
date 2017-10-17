@@ -18,6 +18,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.session.login(this.form.user, this.form.password);
+    this.session.login(this.form.username, this.form.password);
   }
 }

@@ -6,7 +6,7 @@ import { GenericService } from './generic.service';
 
 @Injectable()
 export class UserService extends GenericService<User> {
-    protected urlAPI:string = 'http://localhost:3000/game';
+    protected urlAPI:string = 'http://localhost:3000/user';
 }
 // import { Injectable } from '@angular/core';
 // import { HttpClient } from '@angular/common/http';

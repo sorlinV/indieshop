@@ -21,17 +21,22 @@
                 <p>Profil</p>
             </a>
         </li>
-        <li>
+        <li *ngIf="session.getSession() !== null">
             <a routerLink="/panier" routerLinkActive="active">
-                <p>Panier</p>
+                <p>Panier de {{session.getSession()}}</p>
             </a>
         </li>
-        <li>
+        <li *ngIf="session.getSession() === null">
             <a (click)="loginHidden = false">
-                <p>login</p>
+                <p>login/register</p>
             </a>
         </li>
     </ul>
 </header>
-<div *ngIf="!loginHidden" (click)="loginHidden = true"></div>
+<div class="headerLogin">
+    <button *ngIf="!loginHidden || !registerHidden" (click)="loginHidden = false; registerHidden = true">LOGIN</button>
+    <button *ngIf="!loginHidden || !registerHidden" (click)="loginHidden = true; registerHidden = false">REGISTER</button>
+    <button *ngIf="!loginHidden || !registerHidden" (click)="loginHidden = true; registerHidden = true">X</button>
+</div>
+<app-register *ngIf="!registerHidden"></app-register>
 <app-login *ngIf="!loginHidden"></app-login>

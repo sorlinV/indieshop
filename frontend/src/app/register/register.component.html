@@ -1,3 +1,15 @@
-<p>
-  register works!
-</p>
+<p *ngIf="session === undefined">session = {{session.getSession().username}}</p>
+<div class="overlay">
+    <form (submit)="login()">
+        <label for="username">Username:</label>
+        <input type="username" [(ngModel)]="form.username" name="username">
+        <label for="password">Password:</label>
+        <input type="password" [(ngModel)]="form.password" name="password">
+        <label for="password">Confirm password:</label>
+        <input type="password" [(ngModel)]="form.password2" name="password">
+        <label for="password">mail:</label>
+        <input type="mail" [(ngModel)]="form.mail" name="password">
+        <input type="submit">
+        <p class="error">{{errorMessage}}</p>
+    </form>
+</div>

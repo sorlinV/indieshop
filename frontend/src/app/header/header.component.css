@@ -9,8 +9,8 @@ header ul {
     height: 100%;
     display: flex;
     justify-content: space-around;
-    align-items: 800px;
-    width: 50%;
+    width: 100%;
+    max-width: 800px;
 }
 
 header ul li {
@@ -34,4 +34,12 @@ header a {
 header ul li:hover,
 .active {
     background: rgb(219, 219, 219);
+}
+
+.headerLogin {
+    z-index: 4;
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
 }

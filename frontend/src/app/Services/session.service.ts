@@ -25,9 +25,12 @@ export class SessionService {
     }
 
     login (username:string, password:string) {
+        console.log("try to login");
         this.userService.getAll().then ((users)=>{
             for (let u of users) {
+                console.log(u.username + " === " + username + "&&" + u.password + " === " + password);
                 if (u.username === username && u.password === password) {
+                    console.log("login complete");
                     localStorage.setItem('user', JSON.stringify(u));
                 }
             }
