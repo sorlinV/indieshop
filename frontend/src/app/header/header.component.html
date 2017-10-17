@@ -17,7 +17,7 @@
             </a>
         </li>
         <li>
-            <a routerLink="/profil/0" routerLinkActive="active">
+            <a routerLink="/profil/1" routerLinkActive="active">
                 <p>Profil</p>
             </a>
         </li>
@@ -26,5 +26,12 @@
                 <p>Panier</p>
             </a>
         </li>
+        <li>
+            <a (click)="loginHidden = false">
+                <p>login</p>
+            </a>
+        </li>
     </ul>
 </header>
+<div *ngIf="!loginHidden" (click)="loginHidden = true"></div>
+<app-login *ngIf="!loginHidden"></app-login>

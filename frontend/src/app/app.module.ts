@@ -13,6 +13,9 @@ import { appRoutes } from './app.routes';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { HeaderComponent } from './header/header.component';
 import { UserService } from './Services/user.service';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { SessionService } from './Services/session.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import { UserService } from './Services/user.service';
     GamesComponent,
     ProfilComponent,
     NotfoundComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,8 @@ import { UserService } from './Services/user.service';
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    UserService
+    UserService,
+    SessionService
   ],
   bootstrap: [AppComponent]
 })

@@ -14,9 +14,9 @@ export class ProfilComponent implements OnInit {
   private form;
   constructor(private route:ActivatedRoute, private userService:UserService) { }
 
-  ngOnInit() {
+  getUser() {
     this.route.params.subscribe((params) => {
-      this.userService.getUser(params.id).then((user)=>{
+      this.userService.getById(params.id).then((user)=>{
         this.user = user;
         this.form = {
           username: user.username,
@@ -28,25 +28,35 @@ export class ProfilComponent implements OnInit {
     });
   }
 
+  ngOnInit() {
+    this.getUser();
+  }
+
   update() {
     this.is_editing = false;
     if (this.form.pass === this.form.pass2 &&
       this.form.pass !== "" &&
       this.form.pass2 !== "") {
         this.route.params.subscribe((params) => {
-          this.userService.updateUser(params.id, {
+          this.userService.update(params.id, {
             username: this.form.username,
             password: this.form.pass,
             mail: this.form.mail
-          });
+          }).then(()=>{this.getUser()});
         });  
       } else {
         this.route.params.subscribe((params) => {
-        this.userService.updateUser(params.id, {
+        this.userService.update(params.id, {
           username: this.form.username,
           mail: this.form.mail
-        });
+        }).then(()=>{this.getUser()});
       });
     }
+  }
+
+  remove() {
+    this.route.params.subscribe((params) => {
+      this.userService.delete(params.id);
+    });
   }
 }

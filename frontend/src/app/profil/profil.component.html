@@ -2,17 +2,21 @@
     <form action="" (submit)="update()">
         <label for="username">Username:</label>
         <input type="username" [(ngModel)]="form.username" name="username">
-        <label for="pass">Password:</label>
+        <label for="pass">New password:</label>
         <input type="password" [(ngModel)]="form.pass" name="pass">
-        <label for="pass2">Confirm password:</label>
-        <input type="password" [(ngModel)]="form.pass2" name="pass2">
         <label for="mail">mail:</label>
         <input type="mail" [(ngModel)]="form.mail" name="mail">
-        <input type="submit" value="Submit" />
+        <label for="pass2">Confirm new password:</label>
+        <input type="password" [(ngModel)]="form.pass2" name="pass2">
+        <div>
+            <input type="submit" value="Submit" />
+            <input type="button" (click)="is_editing = false" value="Cancel" />
+        </div>
     </form>
 </article>
 <article *ngIf="is_editing === false">
     <p>{{user.username}}</p>
     <p>{{user.mail}}</p>
     <input (click)="is_editing = true" type="submit" value="Edit" />
+    <input (click)="remove()" type="submit" value="Remove" />
 </article>
