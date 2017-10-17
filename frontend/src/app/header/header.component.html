@@ -1,37 +1,41 @@
 <header>
     <img src="assets/img/indiegame_logo.png" alt="logo indieshop" id="logo">
-    <ul>
-        <li>
-            <a routerLink="/store" routerLinkActive="active">
-                <p>Store</p>
-            </a>
-        </li>
-        <li>
-            <a routerLink="/games" routerLinkActive="active">
-                <p>Library</p>
-            </a>
-        </li>
-        <li>
-            <a routerLink="/admin" routerLinkActive="active">
-                <p>Admin</p>
-            </a>
-        </li>
-        <li>
-            <a routerLink="/profil/1" routerLinkActive="active">
-                <p>Profil</p>
-            </a>
-        </li>
-        <li *ngIf="session.getSession() !== null">
-            <a routerLink="/panier" routerLinkActive="active">
-                <p>Panier de {{session.getSession()}}</p>
-            </a>
-        </li>
-        <li *ngIf="session.getSession() === null">
-            <a (click)="loginHidden = false">
-                <p>login/register</p>
-            </a>
-        </li>
-    </ul>
+    <nav>
+        <main>
+            <ul>
+                <li>
+                    <a routerLink="/store" routerLinkActive="active">
+                        <p>Store</p>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/games" routerLinkActive="active">
+                        <p>Library</p>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/admin" routerLinkActive="active">
+                        <p>Admin</p>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/profil/1" routerLinkActive="active">
+                        <p>Profil</p>
+                    </a>
+                </li>
+                <li *ngIf="session.getSession() !== null">
+                    <a routerLink="/panier" routerLinkActive="active">
+                        <p>Panier de {{session.getSession()}}</p>
+                    </a>
+                </li>
+            </ul>
+        </main>
+        <footer>
+            <input type="search" placeholder="Find Game">
+            <button *ngIf="session.getSession() === null" (click)="loginHidden=false">Login / Register</button>
+            <button *ngIf="session.getSession() !== null">Logout</button>
+        </footer>
+    </nav>
 </header>
 <div class="headerLogin">
     <button *ngIf="!loginHidden || !registerHidden" (click)="loginHidden = false; registerHidden = true">LOGIN</button>
