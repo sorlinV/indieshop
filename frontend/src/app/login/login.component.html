@@ -1,4 +1,4 @@
-<p *ngIf="session === undefined">session = {{session.getSession().username}}</p>
+<p *ngIf="session.getSession() === null">session = {{session.getSession().username}}</p>
 <div class="overlay">
     <form (submit)="login()">
         <label for="username">Username:</label>

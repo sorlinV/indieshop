@@ -10,9 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Validator\Constraints\DateTime;
-
 /**
  * User controller.
  *
@@ -20,20 +17,28 @@ use Symfony\Component\Validator\Constraints\DateTime;
  */
 class UserController extends Controller
 {
+    private function userToJson(User $u) {
+        $user = ["username" => $u->getUsername(), "mail" => $u->getMail(), $u->getRoles()];
+        return json_encode($user);
+    }
+
     /**
-     * @Route("/test", name="user_test")
+     * @Route("", name="user_all")
      * @Method("GET")
      * @param Request $request
      * @return Response
      */
-    public function test(Request $request)
+    public function login(Request $request)
     {
-        $wsse = $this->container->get('AppBundle\Security\Authentication\Provider\WsseProvider');
-//        var_dump($wsse->authenticate('a'));
-//        return new Response(json_encode($wsse));
-        return new Response();
+        $userDb = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findAll();
+        $json = "";
+        foreach ($userDb as $u) {
+            $json += $this->userToJson($u);
+        }
+        return new Response($json);
     }
-
 
     /**
      * @Route("", name="user_register")
@@ -41,14 +46,14 @@ class UserController extends Controller
      * @param Request $request
      * @return Response
      */
-     public function register(Request $request)
-     {
-         $post = $request->request->all();
-         if (!empty($post["username"]) && !empty($post["password"]) && !empty($post["mail"]))
-         {
-             if (empty($this->getDoctrine()
-                    ->getRepository(User::class)
-                    ->findOneBy(Array("username" => $post["username"]))))
+    public function register(Request $request)
+    {
+        $post = $request->request->all();
+        if (!empty($post["username"]) && !empty($post["password"]) && !empty($post["mail"]))
+        {
+            if (empty($this->getDoctrine()
+                ->getRepository(User::class)
+                ->findOneBy(Array("username" => $post["username"]))))
             {
                 $cart = new Cart();
                 $em = $this->getDoctrine()->getManager();
@@ -67,35 +72,10 @@ class UserController extends Controller
             } else {
                 return new Response('User already in use');
             }
-         }
-         return new Response('wrong from or request');
-     }
-
-    /**
-     * @Route("", name="user_login")
-     * @Method("GET")
-     * @param Request $request
-     * @return Response
-     */
-    public function login(Request $request)
-    {
-        $post = $request->request->all();
-        if (!empty($post["username"]) && !empty($post["password"]))
-        {
-            $userDb = $this->getDoctrine()
-                ->getRepository(User::class)
-                ->findOneBy(Array(
-                    "username" => $post["username"]));
-            if (!empty($userDb) && $userDb->getUsername() === $post["username"]
-                && $userDb->getPassword() === hash("sha256", $post["password"] . $userDb->getSalt()))
-            {
-                return new Response(json_encode($userDb));
-            } else {
-                return new Response('Wrong password or username');
-            }
         }
-        return new Response('Wrong form or request');
+        return new Response('wrong from or request');
     }
+
 
     /**
      * @Route("/delete", name="user_delete")

@@ -1,45 +1,40 @@
 {
-    "user": [{
-            "username": "toto",
-            "password": "ilovetata",
-            "mail": "toto@hotmail.com",
-            "id": 1
-        },
-        {
-            "username": "toto",
-            "password": "ilovetata",
-            "mail": "totoisalie@gmail.com",
-            "id": 2
-        },
-        {
-            "username": "tété",
-            "password": "ilovetata",
-            "mail": "totoisalie@gmail.com",
-            "id": 3
-        },
-        {
-            "username": "titi",
-            "password": "ilovetata",
-            "mail": "totoisalie@gmail.com",
-            "id": 4
-        },
-        {
-            "username": "tata",
-            "password": "ilovetoto",
-            "mail": "totoisalie@gmail.com",
-            "id": 5
-        },
-        {
-            "username": "a",
-            "password": "123",
-            "mail": "a@gmail.com",
-            "id": 6
-        },
-        {
-            "username": "i",
-            "password": "i",
-            "mail": "i",
-            "id": 7
-        }
-    ]
+  "user": [
+    {
+      "username": "toto",
+      "password": "ilovetata",
+      "mail": "toto@hotmail.com",
+      "id": 1
+    },
+    {
+      "username": "tété",
+      "password": "ilovetata",
+      "mail": "totoisalie@gmail.com",
+      "id": 3
+    },
+    {
+      "username": "titi",
+      "password": "ilovetata",
+      "mail": "totoisalie@gmail.com",
+      "id": 4
+    },
+    {
+      "username": "tata",
+      "password": "ilovetoto",
+      "mail": "totoisalie@gmail.com",
+      "id": 5
+    },
+    {
+      "username": "a",
+      "password": "123",
+      "mail": "a@gmail.com",
+      "id": 6
+    },
+    {
+      "username": "i",
+      "password": "i",
+      "mail": "i",
+      "id": 7
+    }
+  ]
 }
