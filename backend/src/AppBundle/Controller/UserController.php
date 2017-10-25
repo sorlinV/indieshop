@@ -2,51 +2,101 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\AppBundle;
 use AppBundle\Entity\Cart;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use JMS\Serializer\SerializationContext;
 
 /**
  * User controller.
  *
  * @Route("user")
  */
-class UserController extends Controller
-{
-    private function userToJson(User $u) {
-        $user = ["username" => $u->getUsername(), "mail" => $u->getMail(), $u->getRoles()];
-        return json_encode($user);
+class UserController extends Controller {
+
+
+    private function jsonResponse ($obj, $group):Response {
+        $json = $this->get('jms_serializer')->serialize(
+            $obj,
+            "json"
+            ,SerializationContext::create()->setGroups(array($group))
+        );
+        $response = new JsonResponse($json, 200, [], true);
+        return $response;
     }
 
-    /**
-     * @Route("", name="user_all")
-     * @Method("GET")
-     * @param Request $request
-     * @return Response
-     */
-    public function login(Request $request)
-    {
+    private function connectMail($post){
+        $em = $this->getDoctrine()->getManager();
         $userDb = $this->getDoctrine()
             ->getRepository(User::class)
-            ->findAll();
-        $json = "";
-        foreach ($userDb as $u) {
-            $json += $this->userToJson($u);
-        }
-        return new Response($json);
+            ->findOneBy(Array("mail" => $post['usermail']));
+        $userDb->generateToken();
+        $em->persist($userDb);
+        $em->flush();
+        return $userDb;
+    }
+
+    private function connectUsername($post){
+        $em = $this->getDoctrine()->getManager();
+        $userDb = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findOneBy(Array("username" => $post['usermail']));
+        $userDb->generateToken();
+        $em->persist($userDb);
+        $em->flush();
+        return $userDb;
     }
 
     /**
-     * @Route("", name="user_register")
+     * @Route("/one", name="userAll")
+     * @Method("POST")
+     * @param Request $req
+     * @return Response
+     */
+    public function UsersLogin(Request $req):Response
+    {
+        $usersDb = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findAll();
+        $post = $req->request->all();
+        if (!empty($post['usermail']) && !empty($post['password'])) {
+            if (strpos($post['usermail'], '@') !== false) {
+                $userDb = $this->connectMail($post);
+            } else {
+                $userDb = $this->connectUsername($post);
+            }
+            return $this->jsonResponse($userDb, "token");
+        }
+        return $this->jsonResponse($usersDb, "normal");
+    }
+
+    /**
+     * @Route("/{name}", name="user")
+     * @Method("PUT")
+     * @return Response
+     */
+    function user($name):Response {
+        $userDb = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findOneBy(Array("username" => $name));
+        return $this->jsonResponse($userDb, "normal");
+    }
+
+
+
+    /**
+     * @Route("", name="user_add")
      * @Method("POST")
      * @param Request $request
      * @return Response
      */
-    public function register(Request $request)
+    public function register(Request $request):Response
     {
         $post = $request->request->all();
         if (!empty($post["username"]) && !empty($post["password"]) && !empty($post["mail"]))
@@ -64,36 +114,36 @@ class UserController extends Controller
                 $u->setSalt(hash("sha256", rand()));
                 $u->setPassword(hash("sha256", $post["password"] . $u->getSalt()));
                 $u->setCart($cart);
+                $u->generateToken();
                 $em->persist($cart);
                 $em->persist($u);
                 $em->flush();
-                $_SESSION['user'] = $u->getId();
-                return new Response(json_encode($u));
+                return $this->jsonResponse($u, "token");
             } else {
                 return new Response('User already in use');
             }
         }
-        return new Response('wrong from or request');
+        return new Response('wrong from or request for register');
     }
 
 
     /**
-     * @Route("/delete", name="user_delete")
-     * @Method("POST")
+     * @Route("", name="user_delete")
+     * @Method("DELETE")
      * @param Request $request
      * @return Response
      */
-    public function delete(Request $request)
+    public function delete(Request $request):Response
     {
         $post = $request->request->all();
-        if (!empty($post["username"]) && !empty($post["password"]))
+        if (!empty($post["username"]) && !empty($post['token']))
         {
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
                 ->findOneBy(Array(
                     "username" => $post["username"]));
             if (!empty($userDb) && $userDb->getUsername() === $post["username"]
-                && $userDb->getPassword() === hash("sha256", $post["password"] . $userDb->getSalt()))
+                && explode('&', $userDb->generateToken())[1] === explode('&', $post['token']))
             {
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($userDb);
@@ -107,31 +157,52 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("", name="user_update")
-     * @Method("UPDATE")
+     * @Route("/{name}", name="user_update")
+     * @Method("PATCH")
      * @param Request $request
      * @return Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $name):Response
     {
         $post = $request->request->all();
-        if (!empty($post["username"]) && !empty($post["password"]))
+        $userDb = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findOneBy(Array(
+                "username" => $name));
+        if (!empty($post['token']) && $userDb->verifToken($post['token']))
         {
-            $userDb = $this->getDoctrine()
-                ->getRepository(User::class)
-                ->findOneBy(Array(
-                    "username" => $post["username"]));
-            if (!empty($userDb) && $userDb->getUsername() === $post["username"]
-                && $userDb->getPassword() === hash("sha256", $post["password"] . $userDb->getSalt()))
-            {
-                $em = $this->getDoctrine()->getManager();
-                $em->remove($userDb);
-                $em->flush();
-                return new Response('User remove');
-            } else {
-                return new Response('Wrong password or username');
+            if (!empty($post['username'])) {
+                $tmpUser = $this->getDoctrine()
+                    ->getRepository(User::class)
+                    ->findOneBy(Array(
+                        "username" => $post['username']));
+                if (empty($tmpUser)) {
+                    $userDb->setUsername($post['username']);
+                } else {
+                    return new Response('Username already in use');
+                }
             }
+            if (!empty($post['password'])) {
+                $userDb->setSalt(hash("sha256", rand()));
+                $userDb->setPassword(hash("sha256", $post["password"] . $userDb->getSalt()));
+                $userDb->generateToken();
+            }
+            if (!empty($post['mail'])) {
+                $tmpUser = $this->getDoctrine()
+                    ->getRepository(User::class)
+                    ->findOneBy(Array(
+                        "mail" => $post['mail']));
+                if (empty($tmpUser)) {
+                    $userDb->setMail($post['mail']);
+                } else {
+                    new Response('Mail already in use');
+                }
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($userDb);
+            $em->flush();
+            return $this->jsonResponse($userDb, "token");
         }
-        return new Response('Wrong form or request');
+        return new Response('Username already in use');
     }
 }

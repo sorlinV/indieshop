@@ -21,7 +21,7 @@ class Cart
     /**
     * @ORM\ManyToMany(targetEntity="Game", mappedBy="carts")
     */
-    private $game;
+    private $games;
 
     /**
     * @var int
@@ -106,5 +106,15 @@ class Cart
     public function getGame()
     {
         return $this->game;
+    }
+
+    /**
+     * Get games
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGames()
+    {
+        return $this->games;
     }
 }

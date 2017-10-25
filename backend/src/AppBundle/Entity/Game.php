@@ -38,7 +38,7 @@ class Game
     * @ORM\ManyToMany(targetEntity="Cart", inversedBy="games", cascade={"persist"})
     * @ORM\JoinTable(name="Cart_Game")
     */
-    private $cart;
+    private $carts;
 
     /**
     * @ORM\OneToMany(targetEntity="Report", mappedBy="game")
@@ -327,7 +327,7 @@ class Game
      */
     public function addCart(\AppBundle\Entity\Cart $cart)
     {
-        $this->cart[] = $cart;
+        $this->carts[] = $cart;
 
         return $this;
     }
@@ -339,7 +339,7 @@ class Game
      */
     public function removeCart(\AppBundle\Entity\Cart $cart)
     {
-        $this->cart->removeElement($cart);
+        $this->carts->removeElement($cart);
     }
 
     /**
@@ -347,9 +347,9 @@ class Game
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCart()
+    public function getCarts()
     {
-        return $this->cart;
+        return $this->carts;
     }
 
     /**

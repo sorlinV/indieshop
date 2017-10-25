@@ -1,0 +1,33 @@
+AppBundle\Entity\User:
+    exclusion_policy: ALL
+    properties:
+        creations:
+            expose: true
+            groups: ["token", ]
+        games:
+            expose: true
+            groups: ["token"]
+        rates:
+            expose: true
+            groups: ["token"]
+        cart:
+            expose: true
+            groups: ["token", "normal"]
+        id:
+            expose: false
+            groups: ["token", "normal"]
+        username:
+            expose: true
+            groups: ["token", "normal"]
+        password:
+            expose: true
+            groups: ["token", "normal"]
+        salt:
+            expose: false
+            groups: []
+        grade:
+            expose: true
+            groups: ["token", "normal"]
+        token:
+            expose: true
+            groups: ["token"]

@@ -3,8 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\EquatableInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * User
@@ -12,28 +11,32 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User implements UserInterface, EquatableInterface
+class User
 {
     /**
     * @ORM\ManyToMany(targetEntity="Game", inversedBy="creators", cascade={"persist"})
     * @ORM\JoinTable(name="User_Game_Creator")
+    * @Groups({"Default", "normal", "token"})
     */
     private $creations;
 
     /**
     * @ORM\ManyToMany(targetEntity="Game", inversedBy="buyer", cascade={"persist"})
     * @ORM\JoinTable(name="User_Game_Buy")
-    */
+     * @Groups({"token"})
+     */
     private $games;
     
     /**
     * @ORM\OneToMany(targetEntity="Rate", mappedBy="user")
-    */
+     * @Groups({"token"})
+     */
     private $rates;    
 
     /**
     * @ORM\OneToOne(targetEntity="Cart")
     * @ORM\JoinColumn(name="cart_id", referencedColumnName="id")
+    * @Groups({"token"})
     */
     private $cart;
 
@@ -50,6 +53,7 @@ class User implements UserInterface, EquatableInterface
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255)
+     * @Groups({"normal", "token"})
      */
     private $username;
 
@@ -81,6 +85,12 @@ class User implements UserInterface, EquatableInterface
      */
     private $grade;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="token", type="string", length=255)
+     */
+    private $token;
 
     /**
      * Get id
@@ -345,5 +355,44 @@ class User implements UserInterface, EquatableInterface
     public function getCart()
     {
         return $this->cart;
+    }
+
+    /**
+     * Set token
+     *
+     * @param string $token
+     *
+     * @return User
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get token
+     *
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->password;
+    }
+
+    public function generateToken()
+    {
+        $this->token = hash("sha256", $this->mail . $this->salt);
+        $this->token = time() . "&" . $this->token;
+    }
+
+    public function verifToken($token)
+    {
+        if (explode('&', $token)[1] === explode('&', $this->token)[1])
+        {
+            return true;
+        }
+        return false;
     }
 }
