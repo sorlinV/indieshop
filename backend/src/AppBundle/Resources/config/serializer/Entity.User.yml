@@ -1,6 +1,18 @@
 AppBundle\Entity\User:
     exclusion_policy: ALL
     properties:
+        id:
+            expose: true
+            groups: ["token", "normal"]
+        username:
+            expose: true
+            groups: ["token", "normal"]
+        password:
+            expose: false
+            groups: []
+        salt:
+            expose: false
+            groups: []
         creations:
             expose: true
             groups: ["token", ]
@@ -13,18 +25,6 @@ AppBundle\Entity\User:
         cart:
             expose: true
             groups: ["token", "normal"]
-        id:
-            expose: false
-            groups: ["token", "normal"]
-        username:
-            expose: true
-            groups: ["token", "normal"]
-        password:
-            expose: true
-            groups: ["token", "normal"]
-        salt:
-            expose: false
-            groups: []
         grade:
             expose: true
             groups: ["token", "normal"]

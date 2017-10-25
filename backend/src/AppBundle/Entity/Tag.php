@@ -34,6 +34,10 @@ class Tag
      */
     private $name;
 
+    public function __construct(Game $game, string $name){
+        $this->games[] = $game;
+        $this->name = $name;
+    }
 
     /**
      * Get id
@@ -67,13 +71,6 @@ class Tag
     public function getName()
     {
         return $this->name;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->games = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

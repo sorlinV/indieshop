@@ -1,0 +1,36 @@
+AppBundle\Entity\Game:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: ["Default"]
+        name:
+            expose: true
+            groups: ["Default"]
+        description:
+            expose: true
+            groups: ["Default"]
+        imgs:
+            expose: true
+            groups: ["Default"]
+        files:
+            expose: true
+            groups: ["Default"]
+        creators:
+            expose: true
+            groups: ["Default"]
+        buyer:
+            expose: false
+            groups: ["Default"]
+        reports:
+            expose: true
+            groups: ["Default"]
+        carts:
+            expose: true
+            groups: ["Default"]
+        rates:
+            expose: true
+            groups: ["Default"]
+        tags:
+            expose: true
+            groups: ["Default"]

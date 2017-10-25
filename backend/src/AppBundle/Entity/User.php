@@ -378,7 +378,7 @@ class User
      */
     public function getToken()
     {
-        return $this->password;
+        return $this->token;
     }
 
     public function generateToken()

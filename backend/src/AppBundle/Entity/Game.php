@@ -85,6 +85,18 @@ class Game
      */
     private $price;
 
+    public function __construct(string $name, string $desc, float $price, User $creator) {
+        $this->name = $name;
+        $this->desciption = $desc;
+        $this->price = $price;
+        $this->imgs = [];
+        $this->files = [];
+        $this->creators = [$creator];
+        $this->buyer = [];
+        $this->reports = [];
+        $this->carts = [];
+        $this->rates = [];
+    }
 
     /**
      * Get id
@@ -166,20 +178,6 @@ class Game
     public function getPrice()
     {
         return $this->price;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->creators = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->buyer = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->rates = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->cart = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->reports = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->imgs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->files = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

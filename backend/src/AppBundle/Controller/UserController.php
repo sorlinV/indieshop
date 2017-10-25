@@ -54,16 +54,27 @@ class UserController extends Controller {
     }
 
     /**
-     * @Route("/one", name="userAll")
+     * @Route("/all", name="allUser")
      * @Method("POST")
      * @param Request $req
      * @return Response
      */
-    public function UsersLogin(Request $req):Response
+    public function allUser(Request $req):Response
     {
         $usersDb = $this->getDoctrine()
             ->getRepository(User::class)
             ->findAll();
+        return $this->jsonResponse($usersDb, "normal");
+    }
+
+    /**
+     * @Route("/login", name="loginUser")
+     * @Method("POST")
+     * @param Request $req
+     * @return Response
+     */
+    public function loginUser(Request $req):Response
+    {
         $post = $req->request->all();
         if (!empty($post['usermail']) && !empty($post['password'])) {
             if (strpos($post['usermail'], '@') !== false) {
@@ -73,12 +84,12 @@ class UserController extends Controller {
             }
             return $this->jsonResponse($userDb, "token");
         }
-        return $this->jsonResponse($usersDb, "normal");
     }
 
+
     /**
-     * @Route("/{name}", name="user")
-     * @Method("PUT")
+     * @Route("/one/{name}", name="oneUser")
+     * @Method("POST")
      * @return Response
      */
     function user($name):Response {
@@ -91,7 +102,7 @@ class UserController extends Controller {
 
 
     /**
-     * @Route("", name="user_add")
+     * @Route("register", name="registerUser")
      * @Method("POST")
      * @param Request $request
      * @return Response
@@ -128,8 +139,8 @@ class UserController extends Controller {
 
 
     /**
-     * @Route("", name="user_delete")
-     * @Method("DELETE")
+     * @Route("delete", name="deleteUser")
+     * @Method("POST")
      * @param Request $request
      * @return Response
      */
@@ -157,8 +168,8 @@ class UserController extends Controller {
     }
 
     /**
-     * @Route("/{name}", name="user_update")
-     * @Method("PATCH")
+     * @Route("/modify/{name}", name="modifyUser")
+     * @Method("POST")
      * @param Request $request
      * @return Response
      */
