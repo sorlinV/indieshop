@@ -57,8 +57,9 @@ class GameController extends Controller {
             $em->persist($userDb);
             $em->persist($game);
             $em->flush();
+            return new Response('Game added');
         }
-        return new Response('error');
+        return new Response('wrong body need: token, name, desc, price, tags');
     }
 
     /**
@@ -84,7 +85,7 @@ class GameController extends Controller {
             $em->flush();
             return $this->jsonResponse($userDb, "token");
         }
-        return new Response('error');
+        return new Response('wrong body need: token, name, desc, price, tags');
     }
 
     /**
@@ -112,7 +113,7 @@ class GameController extends Controller {
                 }
             }
         }
-        return new Response('error');
+        return new Response('wrong body need: token');
     }
 
     /**
@@ -145,7 +146,7 @@ class GameController extends Controller {
             $em->flush();
             return new Response('user added to game');
         }
-        return new Response('error');
+        return new Response('wrong body need: token, usermail');
     }
 
     /**
@@ -159,6 +160,27 @@ class GameController extends Controller {
             ->getRepository(Game::class)
             ->findAll();
         return $this->jsonResponse($gamesDb, 'Default');
+    }
+
+    /**
+     * @Route("/buy", name="gameBuy")
+     * @Method("POST")
+     * @param Request $req
+     * @return Response
+     */
+    public function gameBuy(Request $req):Response
+    {
+        $post = $req->request->all();
+        if (!empty($post['token'])) {
+            $userDb = $this->getDoctrine()
+                ->getRepository(User::class)
+                ->findOneBy(["token" => $post['token']]);
+            $gamesDb = $this->getDoctrine()
+                ->getRepository(Game::class)
+                ->findOneBy(["user_id" => $userDb->getId()]);
+            return $this->jsonResponse($gamesDb, 'Default');
+        }
+        return new Response('wrong body need: token');
     }
 
     /**

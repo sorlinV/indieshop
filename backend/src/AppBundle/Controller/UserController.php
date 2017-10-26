@@ -84,6 +84,7 @@ class UserController extends Controller {
             }
             return $this->jsonResponse($userDb, "token");
         }
+        return new Response('wrong body need: usermail, password');
     }
 
 
@@ -102,7 +103,7 @@ class UserController extends Controller {
 
 
     /**
-     * @Route("register", name="registerUser")
+     * @Route("/register", name="registerUser")
      * @Method("POST")
      * @param Request $request
      * @return Response
@@ -124,6 +125,7 @@ class UserController extends Controller {
                 $u->setGrade("user");
                 $u->setSalt(hash("sha256", rand()));
                 $u->setPassword(hash("sha256", $post["password"] . $u->getSalt()));
+                $cart->setUser($u);
                 $u->setCart($cart);
                 $u->generateToken();
                 $em->persist($cart);

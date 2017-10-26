@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Report
 {
     /**
+     * @ORM\ManyToOne(targetEntity="Game", inversedBy="reports")
+     * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
+     */
+    private $game;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -35,6 +41,13 @@ class Report
      */
     private $description;
 
+
+    public function __construct($game, $title, $description)
+    {
+        $this->game = $game;
+        $this->title = $title;
+        $this->description = $description;
+    }
 
     /**
      * Get id
@@ -92,5 +105,29 @@ class Report
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set game
+     *
+     * @param \AppBundle\Entity\Game $game
+     *
+     * @return Report
+     */
+    public function setGame(\AppBundle\Entity\Game $game = null)
+    {
+        $this->game = $game;
+
+        return $this;
+    }
+
+    /**
+     * Get game
+     *
+     * @return \AppBundle\Entity\Game
+     */
+    public function getGame()
+    {
+        return $this->game;
     }
 }

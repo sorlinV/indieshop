@@ -360,7 +360,6 @@ class Game
     public function addReport(\AppBundle\Entity\Report $report)
     {
         $this->reports[] = $report;
-
         return $this;
     }
 

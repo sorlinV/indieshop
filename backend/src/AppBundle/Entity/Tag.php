@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Tag
 {
     /**
-     * @ORM\ManyToMany(targetEntity="Game", mappedBy="games")
+     * @ORM\ManyToMany(targetEntity="Game", mappedBy="tags")
      * @ORM\JoinTable(name="article_tags")
      */
     private $games;

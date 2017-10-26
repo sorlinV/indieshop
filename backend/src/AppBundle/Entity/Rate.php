@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Rate
@@ -47,6 +48,13 @@ class Rate
      */
     private $date;
 
+    public function __construct($user, $game, $rate)
+    {
+        $this->user = $user;
+        $this->game = $game;
+        $this->rate = $rate;
+        $this->date = new DateTime();
+    }
 
     /**
      * Get id
