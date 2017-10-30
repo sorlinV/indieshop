@@ -12,8 +12,7 @@ export class AcceuilComponent implements OnInit {
   constructor(private game:GameService, private session:SessionService) { }
 
   ngOnInit() {
-    this.game.getAllGame(this.session.getSession().token).then((games)=>{
-      console.log(games);
+    this.game.getAllGame().then((games)=>{
       this.games = games;
     });
   }

@@ -11,8 +11,8 @@ export class GameService {
   private urlAPI:string = 'http://localhost:8000/game';
   constructor(private http:HttpClient) { }
 
-  getAllGame(token):Promise<Game[]> {
-    return this.http.post<Game[]>(this.urlAPI + '/all', {token})
+  getAllGame():Promise<Game[]> {
+    return this.http.post<Game[]>(this.urlAPI + '/all', {})
     .toPromise();
   }
 
