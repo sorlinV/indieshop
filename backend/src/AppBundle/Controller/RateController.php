@@ -28,8 +28,8 @@ class RateController extends Controller {
         }
         $json = $this->get('jms_serializer')->serialize(
             $obj,
-            "json"
-            ,SerializationContext::create()->setGroups(array($group))
+            "json",
+            SerializationContext::create()->setGroups(array($group))
         );
         $response = new JsonResponse($json, 200, [], true);
         $response->headers->set('Access-Control-Allow-Origin', '*');
@@ -45,18 +45,17 @@ class RateController extends Controller {
     public function rateAdd(Request $req):Response
     {
         $post = json_decode($req->getContent());
-        return $this->jsonResponse('Rate added', 'Default');
         if (!empty($post->token) && !empty($post->game) && !empty($post->rate)) {
             $em = $this->getDoctrine()->getManager();
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
                 ->findOneBy(["token"=>$post->token]);
             $gameDb = $this->getDoctrine()
-                ->getRepository(User::class)
+                ->getRepository(Game::class)
                 ->findOneBy(["id"=>$post->game]);
-            $rate = new Rate($userDb,$gameDb,$post->rate);
-            $gameDb->addRate($rate);
+            $rate = new Rate($userDb, $gameDb, $post->rate);
             $userDb->addRate($rate);
+            $gameDb->addRate($rate);
             $em->persist($rate);
             $em->persist($userDb);
             $em->persist($gameDb);

@@ -3,10 +3,10 @@ AppBundle\Entity\User:
     properties:
         id:
             expose: true
-            groups: ["token", "normal"]
+            groups: ["token", "Default", "normal"]
         username:
             expose: true
-            groups: ["token", "normal"]
+            groups: ["token", "Default", "normal"]
         password:
             expose: false
             groups: []
@@ -24,10 +24,10 @@ AppBundle\Entity\User:
             groups: ["token"]
         cart:
             expose: true
-            groups: ["token", "normal"]
+            groups: ["token", "Default", "normal"]
         grade:
             expose: true
-            groups: ["token", "normal"]
+            groups: ["token", "Default", "normal"]
         token:
             expose: true
             groups: ["token"]

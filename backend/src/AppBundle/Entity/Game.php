@@ -98,10 +98,11 @@ class Game
         $this->rates = [];
     }
 
+
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -139,7 +140,7 @@ class Game
      *
      * @return Game
      */
-    public function setdescription($description)
+    public function setDescription($description)
     {
         $this->description = $description;
 
@@ -151,7 +152,7 @@ class Game
      *
      * @return string
      */
-    public function getdescription()
+    public function getDescription()
     {
         return $this->description;
     }
@@ -251,11 +252,11 @@ class Game
     /**
      * Add buyer
      *
-     * @param \AppBundle\Entity\Game $buyer
+     * @param \AppBundle\Entity\User $buyer
      *
      * @return Game
      */
-    public function addBuyer(\AppBundle\Entity\Game $buyer)
+    public function addBuyer(\AppBundle\Entity\User $buyer)
     {
         $this->buyer[] = $buyer;
 
@@ -265,9 +266,9 @@ class Game
     /**
      * Remove buyer
      *
-     * @param \AppBundle\Entity\Game $buyer
+     * @param \AppBundle\Entity\User $buyer
      */
-    public function removeBuyer(\AppBundle\Entity\Game $buyer)
+    public function removeBuyer(\AppBundle\Entity\User $buyer)
     {
         $this->buyer->removeElement($buyer);
     }
@@ -341,7 +342,7 @@ class Game
     }
 
     /**
-     * Get cart
+     * Get carts
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -360,6 +361,7 @@ class Game
     public function addReport(\AppBundle\Entity\Report $report)
     {
         $this->reports[] = $report;
+
         return $this;
     }
 

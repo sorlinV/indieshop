@@ -24,6 +24,8 @@ export class AcceuilComponent implements OnInit {
   }
 
   public rate(game_id, rate){
-    this.rateService.addRate(this.session.getSession().token, game_id, rate).then((json)=>(this.log(json)));
+    this.rateService.addRate(this.session.getSession().token, game_id, rate)
+    .then((json)=>(this.log(json)))
+    .catch((err)=>{console.log(err)});
   }
 }
