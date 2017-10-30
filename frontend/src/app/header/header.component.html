@@ -30,11 +30,6 @@
                         <p>Library</p>
                     </a>
                 </li>
-                <li>
-                    <a routerLink="/admin" routerLinkActive="active">
-                        <p>Admin</p>
-                    </a>
-                </li>
                 <li *ngIf="session.getSession() !== null">
                     <a routerLink="/profil/{{session.getSession().id}}" routerLinkActive="active">
                         <p>Profil</p>
