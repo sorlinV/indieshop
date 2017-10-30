@@ -2,6 +2,23 @@
     <img src="assets/img/indiegame_logo.png" alt="logo indieshop" id="logo">
     <nav>
         <main>
+            <ul> <!-- *ngIf="session.getSession().grade==='admin'" -->
+                <li>
+                    <a href="">
+                        <p>Manage Users</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <p>Manage Games</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <p>Manage Report</p>
+                    </a>
+                </li>
+            </ul>
             <ul>
                 <li>
                     <a routerLink="/store" routerLinkActive="active">
@@ -33,7 +50,7 @@
         <footer>
             <input type="search" placeholder="Find Game">
             <button *ngIf="session.getSession() === null" (click)="loginHidden=false">Login / Register</button>
-            <button *ngIf="session.getSession() !== null">Logout</button>
+            <button *ngIf="session.getSession() !== null" (click)="session.logout()">Logout</button>
         </footer>
     </nav>
 </header>

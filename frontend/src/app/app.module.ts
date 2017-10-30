@@ -16,6 +16,8 @@ import { UserService } from './Services/user.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { SessionService } from './Services/session.service';
+import { AdminComponent } from './admin/admin.component';
+import { ManageuserComponent } from './admin/manageuser/manageuser.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { SessionService } from './Services/session.service';
     NotfoundComponent,
     HeaderComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AdminComponent,
+    ManageuserComponent
   ],
   imports: [
     BrowserModule,

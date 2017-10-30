@@ -35,6 +35,12 @@
       "password": "i",
       "mail": "i",
       "id": 7
+    },
+    {
+      "username": "lanikeu",
+      "password": "manu",
+      "mail": "lanikeumanu@gmail.com",
+      "id": 8
     }
   ]
 }
