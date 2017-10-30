@@ -69,12 +69,12 @@ class CartController extends Controller {
     public function cartBuy(Request $req):Response
     {
         $post = $req->request->all();
-        if (!empty($post['token']) && !empty($post['game'])) {
+        if (!empty($post['token'])) {
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
                 ->findOneBy(["token"=>$post['token']]);
             $em = $this->getDoctrine()->getManager();
-            foreach ($userDb->getCart()->getGame() as $game)
+            foreach ($userDb->getCart()->getGames() as $game)
             {
                 $gameDb = $this->getDoctrine()
                     ->getRepository(User::class)
