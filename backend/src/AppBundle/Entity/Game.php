@@ -74,9 +74,9 @@ class Game
     /**
      * @var string
      *
-     * @ORM\Column(name="desciption", type="string", length=4096)
+     * @ORM\Column(name="description", type="string", length=4096)
      */
-    private $desciption;
+    private $description;
 
     /**
      * @var float
@@ -85,9 +85,9 @@ class Game
      */
     private $price;
 
-    public function __construct(string $name, string $desc, float $price, User $creator) {
+    public function __construct(string $name, string $description, float $price, User $creator) {
         $this->name = $name;
-        $this->desciption = $desc;
+        $this->description = $description;
         $this->price = $price;
         $this->imgs = [];
         $this->files = [];
@@ -133,27 +133,27 @@ class Game
     }
 
     /**
-     * Set desciption
+     * Set description
      *
-     * @param string $desciption
+     * @param string $description
      *
      * @return Game
      */
-    public function setDesciption($desciption)
+    public function setdescription($description)
     {
-        $this->desciption = $desciption;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get desciption
+     * Get description
      *
      * @return string
      */
-    public function getDesciption()
+    public function getdescription()
     {
-        return $this->desciption;
+        return $this->description;
     }
 
     /**

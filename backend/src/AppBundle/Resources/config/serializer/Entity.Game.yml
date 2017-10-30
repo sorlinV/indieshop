@@ -10,6 +10,9 @@ AppBundle\Entity\Game:
         description:
             expose: true
             groups: ["Default"]
+        price:
+            expose: true
+            groups: ["Default"]
         imgs:
             expose: true
             groups: ["Default"]
