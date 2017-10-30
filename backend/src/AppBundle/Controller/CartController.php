@@ -41,14 +41,14 @@ class CartController extends Controller {
      */
     public function cartAdd(Request $req):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['token']) && !empty($post['game'])) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token) && !empty($post->game)) {
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
-                ->findOneBy(["token"=>$post['token']]);
+                ->findOneBy(["token"=>$post->token]);
             $gameDb = $this->getDoctrine()
                 ->getRepository(Game::class)
-                ->findOneBy(["id"=>$post['game']]);
+                ->findOneBy(["id"=>$post->game]);
 
             $userDb->getCart()->addGame($gameDb);
             $em = $this->getDoctrine()->getManager();
@@ -68,11 +68,11 @@ class CartController extends Controller {
      */
     public function cartBuy(Request $req):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['token'])) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token)) {
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
-                ->findOneBy(["token"=>$post['token']]);
+                ->findOneBy(["token"=>$post->token]);
             $em = $this->getDoctrine()->getManager();
             foreach ($userDb->getCart()->getGames() as $game)
             {
@@ -99,14 +99,14 @@ class CartController extends Controller {
      */
     public function cartDel(Request $req):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['token']) && !empty($post['game'])) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token) && !empty($post->game)) {
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
-                ->findOneBy(["token"=>$post['token']]);
+                ->findOneBy(["token"=>$post->token]);
             $gameDb = $this->getDoctrine()
                 ->getRepository(Game::class)
-                ->findOneBy(["id"=>$post['game']]);
+                ->findOneBy(["id"=>$post->game]);
             $userDb->getCart()->removeGame($gameDb);
             $em = $this->getDoctrine()->getManager();
             $em->remove($userDb);

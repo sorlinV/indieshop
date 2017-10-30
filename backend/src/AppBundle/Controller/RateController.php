@@ -40,16 +40,16 @@ class RateController extends Controller {
      */
     public function rateAdd(Request $req):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['token']) && !empty($post['game']) && !empty($post['rate'])) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token) && !empty($post->game) && !empty($post->rate)) {
             $em = $this->getDoctrine()->getManager();
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
-                ->findOneBy(["token"=>$post['token']]);
+                ->findOneBy(["token"=>$post->token]);
             $gameDb = $this->getDoctrine()
                 ->getRepository(User::class)
-                ->findOneBy(["id"=>$post['game']]);
-            $rate = new Rate($userDb,$gameDb,$post['rate']);
+                ->findOneBy(["id"=>$post->game]);
+            $rate = new Rate($userDb,$gameDb,$post->rate);
             $gameDb->addRate($rate);
             $userDb->addRate($rate);
             $em->persist($rate);
@@ -69,11 +69,11 @@ class RateController extends Controller {
      */
     public function rateDel(Request $req, $id):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['token'])) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token)) {
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
-                ->findOneBy(["token"=>$post['token']]);
+                ->findOneBy(["token"=>$post->token]);
             $rateDb = $this->getDoctrine()
                 ->getRepository(Rate::class)
                 ->findOneBy(["id"=>$id]);

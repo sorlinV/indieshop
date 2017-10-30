@@ -41,15 +41,15 @@ class ReportController extends Controller {
      */
     public function reportAdd(Request $req):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['token']) && !empty($post['game']) &&
-            !empty($post['title']) && !empty($post['description'])) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token) && !empty($post->game) &&
+            !empty($post->title) && !empty($post->description)) {
             $em = $this->getDoctrine()->getManager();
             $gameDb = $this->getDoctrine()
                 ->getRepository(Game::class)
-                ->findOneBy(["id"=>$post['game']]);
+                ->findOneBy(["id"=>$post->game]);
 
-            $report = new Report($gameDb, $post['title'], $post['description']);
+            $report = new Report($gameDb, $post->title, $post->description);
             $gameDb->addReport($report);
             $em->persist($gameDb);
             $em->persist($report);
@@ -67,11 +67,11 @@ class ReportController extends Controller {
      */
     public function reportDel(Request $req, $id):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['token'])) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token)) {
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
-                ->findOneBy(["token"=>$post['token']]);
+                ->findOneBy(["token"=>$post->token]);
             $reportDb = $this->getDoctrine()
                 ->getRepository(Report::class)
                 ->findOneBy(["id"=>$id]);
@@ -93,11 +93,11 @@ class ReportController extends Controller {
      */
     public function reportAll(Request $req):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['token'])) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token)) {
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
-                ->findOneBy(["token"=>$post['token']]);
+                ->findOneBy(["token"=>$post->token]);
             if ($userDb->getGrade() === "admin") {
                 $reportsDb = $this->getDoctrine()
                     ->getRepository(Report::class)

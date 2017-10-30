@@ -39,7 +39,7 @@ class UserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $userDb = $this->getDoctrine()
             ->getRepository(User::class)
-            ->findOneBy(Array("mail" => $post['usermail']));
+            ->findOneBy(Array("mail" => $post->usermail));
         $userDb->generateToken();
         $em->persist($userDb);
         $em->flush();
@@ -50,7 +50,7 @@ class UserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $userDb = $this->getDoctrine()
             ->getRepository(User::class)
-            ->findOneBy(Array("username" => $post['usermail']));
+            ->findOneBy(Array("username" => $post->usermail));
         $userDb->generateToken();
         $em->persist($userDb);
         $em->flush();
@@ -79,9 +79,9 @@ class UserController extends Controller {
      */
     public function loginUser(Request $req):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['usermail']) && !empty($post['password'])) {
-            if (strpos($post['usermail'], '@') !== false) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->usermail) && !empty($post->password)) {
+            if (strpos($post->usermail, '@') !== false) {
                 $userDb = $this->connectMail($post);
             } else {
                 $userDb = $this->connectUsername($post);
@@ -114,21 +114,21 @@ class UserController extends Controller {
      */
     public function register(Request $request):Response
     {
-        $post = $request->request->all();
-        if (!empty($post["username"]) && !empty($post["password"]) && !empty($post["mail"]))
+        $post = json_decode($request->getContent());
+        if (!empty($post->username) && !empty($post->password) && !empty($post->mail))
         {
             if (empty($this->getDoctrine()
                 ->getRepository(User::class)
-                ->findOneBy(Array("username" => $post["username"]))))
+                ->findOneBy(Array("username" => $post->username))))
             {
                 $cart = new Cart();
                 $em = $this->getDoctrine()->getManager();
                 $u = new User();
-                $u->setUsername($post["username"]);
-                $u->setMail($post["mail"]);
+                $u->setUsername($post->username);
+                $u->setMail($post->mail);
                 $u->setGrade("user");
                 $u->setSalt(hash("sha256", rand()));
-                $u->setPassword(hash("sha256", $post["password"] . $u->getSalt()));
+                $u->setPassword(hash("sha256", $post->password . $u->getSalt()));
                 $cart->setUser($u);
                 $u->setCart($cart);
                 $u->generateToken();
@@ -152,15 +152,15 @@ class UserController extends Controller {
      */
     public function delete(Request $request):Response
     {
-        $post = $request->request->all();
-        if (!empty($post["username"]) && !empty($post['token']))
+        $post = json_decode($request->getContent());
+        if (!empty($post->username) && !empty($post->token))
         {
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
                 ->findOneBy(Array(
-                    "username" => $post["username"]));
-            if (!empty($userDb) && $userDb->getUsername() === $post["username"]
-                && explode('&', $userDb->generateToken())[1] === explode('&', $post['token']))
+                    "username" => $post->username));
+            if (!empty($userDb) && $userDb->getUsername() === $post->username
+                && explode('&', $userDb->generateToken())[1] === explode('&', $post->token))
             {
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($userDb);
@@ -181,36 +181,36 @@ class UserController extends Controller {
      */
     public function update(Request $request, $name):Response
     {
-        $post = $request->request->all();
+        $post = json_decode($request->getContent());
         $userDb = $this->getDoctrine()
             ->getRepository(User::class)
             ->findOneBy(Array(
                 "username" => $name));
-        if (!empty($post['token']) && $userDb->verifToken($post['token']))
+        if (!empty($post->token) && $userDb->verifToken($post->token))
         {
-            if (!empty($post['username'])) {
+            if (!empty($post->username)) {
                 $tmpUser = $this->getDoctrine()
                     ->getRepository(User::class)
                     ->findOneBy(Array(
-                        "username" => $post['username']));
+                        "username" => $post->username));
                 if (empty($tmpUser)) {
-                    $userDb->setUsername($post['username']);
+                    $userDb->setUsername($post->username);
                 } else {
                     return $this->jsonResponse('Username already in use', 'normal');
                 }
             }
-            if (!empty($post['password'])) {
+            if (!empty($post->password)) {
                 $userDb->setSalt(hash("sha256", rand()));
-                $userDb->setPassword(hash("sha256", $post["password"] . $userDb->getSalt()));
+                $userDb->setPassword(hash("sha256", $post->password . $userDb->getSalt()));
                 $userDb->generateToken();
             }
-            if (!empty($post['mail'])) {
+            if (!empty($post->mail)) {
                 $tmpUser = $this->getDoctrine()
                     ->getRepository(User::class)
                     ->findOneBy(Array(
-                        "mail" => $post['mail']));
+                        "mail" => $post->mail));
                 if (empty($tmpUser)) {
-                    $userDb->setMail($post['mail']);
+                    $userDb->setMail($post->mail);
                 } else {
                     new Response('Mail already in use');
                 }

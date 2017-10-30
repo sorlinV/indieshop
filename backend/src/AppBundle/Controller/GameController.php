@@ -39,17 +39,17 @@ class GameController extends Controller {
      */
     public function gameAdd(Request $req):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['token']) && !empty($post['name']) &&
-            !empty($post['desc']) && !empty($post['price']) &&
-            !empty($post['tags'])) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token) && !empty($post->name) &&
+            !empty($post->desc) && !empty($post->price) &&
+            !empty($post->tags)) {
             $em = $this->getDoctrine()->getManager();
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
-                ->findOneBy(["token"=>$post['token']]);
-            $game = new Game($post['name'], $post['desc'], $post['price'], $userDb);
+                ->findOneBy(["token"=>$post->token]);
+            $game = new Game($post->name, $post->desc, $post->price, $userDb);
             $userDb->addCreation($game);
-            foreach (explode(',', trim($post['tags'])) as $tag)
+            foreach (explode(',', trim($post->tags)) as $tag)
             {
                 $tmpTag = new Tag($game, $tag);
                 $game->addTag($tmpTag);
@@ -71,14 +71,14 @@ class GameController extends Controller {
      */
     public function gameModify(Request $req):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['token']) && !empty($post['name']) &&
-            !empty($post['desc']) && !empty($post['price']) &&
-            !empty($post['tags'])) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token) && !empty($post->name) &&
+            !empty($post->desc) && !empty($post->price) &&
+            !empty($post->tags)) {
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
-                ->findOneBy(["token"=>$post['token']]);
-            $game = new Game($post['name'], $post['desc'], $post['price'], $userDb, $post['tags']);
+                ->findOneBy(["token"=>$post->token]);
+            $game = new Game($post->name, $post->desc, $post->price, $userDb, $post->tags);
             $userDb->addCreation($game);
             $em = $this->getDoctrine()->getManager();
             $em->persist($userDb);
@@ -97,11 +97,11 @@ class GameController extends Controller {
      */
     public function gameDelete(Request $req, $id):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['token'])) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token)) {
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
-                ->findOneBy(["token"=>$post['token']]);
+                ->findOneBy(["token"=>$post->token]);
             $gameDb = $this->getDoctrine()
                 ->getRepository(Game::class)
                 ->findOneBy(["id"=>$id]);
@@ -125,16 +125,16 @@ class GameController extends Controller {
      */
     public function gameAdduser(Request $req, $id):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['token']) && !empty($post['usermail'])) {
-            if (strpos($post['usermail'], '@') !== false) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token) && !empty($post->usermail)) {
+            if (strpos($post->usermail, '@') !== false) {
                 $userDb = $this->getDoctrine()
                     ->getRepository(User::class)
-                    ->findOneBy(["mail"=>$post['usermail']]);
+                    ->findOneBy(["mail"=>$post->usermail]);
             } else {
                 $userDb = $this->getDoctrine()
                     ->getRepository(User::class)
-                    ->findOneBy(["username"=>$post['usermail']]);
+                    ->findOneBy(["username"=>$post->usermail]);
             }
             $gameDb = $this->getDoctrine()
                 ->getRepository(Game::class)
@@ -171,11 +171,11 @@ class GameController extends Controller {
      */
     public function gameBuy(Request $req):Response
     {
-        $post = $req->request->all();
-        if (!empty($post['token'])) {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token)) {
             $userDb = $this->getDoctrine()
                 ->getRepository(User::class)
-                ->findOneBy(["token" => $post['token']]);
+                ->findOneBy(["token" => $post->token]);
             $gamesDb = $this->getDoctrine()
                 ->getRepository(Game::class)
                 ->findOneBy(["user_id" => $userDb->getId()]);
