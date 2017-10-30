@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GameService } from '../Services/game.service';
+import { SessionService } from '../Services/session.service';
 
 @Component({
   selector: 'app-acceuil',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./acceuil.component.css']
 })
 export class AcceuilComponent implements OnInit {
-
-  constructor() { }
+  private games;
+  constructor(private game:GameService, private session:SessionService) { }
 
   ngOnInit() {
+    this.game.getAllGame(this.session.getSession().token).then((games)=>{
+      this.games = games;
+    });
   }
-
 }

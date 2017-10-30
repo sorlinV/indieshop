@@ -1,3 +1,8 @@
-<p>
-  acceuil works!
-</p>
+<article class="game-all">
+    <ul *ngFor="let game of games">
+        <li>game.name</li>
+        <li>game.price</li>
+        <li>game.desc</li>
+        <li>game.creators[0].username</li>
+    </ul>
+</article>
