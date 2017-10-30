@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../Services/user.service';
 import { SessionService } from '../Services/session.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { SessionService } from '../Services/session.service';
 })
 export class LoginComponent implements OnInit {
   private form;
-  constructor(private session:SessionService) { }
+  constructor(private userService:UserService, private session:SessionService) { }
 
   ngOnInit() {
     this.form = {
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.session.login(this.form.username, this.form.password);
+    this.userService.loginUser(this.form.username, this.form.password)
+    .then((user)=>{this.session.login(user)});
   }
 }

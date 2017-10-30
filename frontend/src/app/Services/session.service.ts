@@ -10,31 +10,12 @@ export class SessionService {
     
     constructor(private userService:UserService){}
     
-    register(username:string, password:string, mail:string) {
-        this.userService.getAll().then ((users)=>{
-            for (let u of users) {
-                if (u.username === username) {
-                    return;
-                }
-            }
-            this.userService.add({username: username, password: password, mail: mail})
-            .then(()=>{
-                this.login(username, password);
-            });
-        })
+    login (user) {
+        localStorage.setItem('user', JSON.stringify(user));
     }
 
-    login (username:string, password:string) {
-        console.log("try to login");
-        this.userService.getAll().then ((users)=>{
-            for (let u of users) {
-                console.log(u.username + " === " + username + "&&" + u.password + " === " + password);
-                if (u.username === username && u.password === password) {
-                    console.log("login complete");
-                    localStorage.setItem('user', JSON.stringify(u));
-                }
-            }
-        })
+    logout () {
+        localStorage.clear();
     }
 
     getSession() {

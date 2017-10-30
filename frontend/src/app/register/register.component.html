@@ -1,6 +1,6 @@
 <p *ngIf="session === undefined">session = {{session.getSession().username}}</p>
 <div class="overlay">
-    <form (submit)="login()">
+    <form (submit)="register()">
         <label for="username">Username:</label>
         <input type="username" [(ngModel)]="form.username" name="username">
         <label for="password">Password:</label>

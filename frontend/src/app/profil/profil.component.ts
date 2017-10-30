@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../Classes/User';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../Services/user.service';
+import { SessionService } from '../Services/session.service';
 
 @Component({
   selector: 'app-profil',
@@ -12,18 +13,18 @@ export class ProfilComponent implements OnInit {
   private is_editing:boolean = false;
   private user;
   private form;
-  constructor(private route:ActivatedRoute, private userService:UserService) { }
+  constructor(private route:ActivatedRoute, private userService:UserService, private session:SessionService) { }
 
   getUser() {
     this.route.params.subscribe((params) => {
-      this.userService.getById(params.id).then((user)=>{
+      this.userService.getUser(params.username).then((user)=>{
         this.user = user;
         this.form = {
-          username: user.username,
+          username: this.user.username,
           pass: "",
           pass2: "",
-          mail: user.mail
-        }
+          mail: this.user.mail
+        };
       });
     });
   }
@@ -38,25 +39,15 @@ export class ProfilComponent implements OnInit {
       this.form.pass !== "" &&
       this.form.pass2 !== "") {
         this.route.params.subscribe((params) => {
-          this.userService.update(params.id, {
-            username: this.form.username,
-            password: this.form.pass,
-            mail: this.form.mail
-          }).then(()=>{this.getUser()});
-        });  
-      } else {
-        this.route.params.subscribe((params) => {
-        this.userService.update(params.id, {
-          username: this.form.username,
-          mail: this.form.mail
-        }).then(()=>{this.getUser()});
-      });
+          this.userService.editUser(this.session.getSession().token, params.username, this.form.username, this.form.mail, this.form.pass)
+        .then(this.getUser);
+      });  
     }
   }
 
   remove() {
     this.route.params.subscribe((params) => {
-      this.userService.delete(params.id);
+      this.userService.removeUser(params.id, this.session.getSession().token);
     });
   }
 }
