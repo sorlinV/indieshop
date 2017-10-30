@@ -8,11 +8,11 @@ import { UserService } from '../../Services/user.service';
   styleUrls: ['./manageuser.component.css']
 })
 export class ManageuserComponent implements OnInit {
-
+  private users;
   constructor(private user:UserService) {}
 
   ngOnInit() {
-    this.user.getAllUser()
+    this.user.getAllUser().then((users)=>{this.users = users}).catch(err => console.log(err));
   }
 
 }
