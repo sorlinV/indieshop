@@ -55,7 +55,7 @@ export class UserService {
   }
 
   getUser(id): Promise<void> {
-    return this.http.post<void>(this.urlAPI+'/one/'+id, {})
+    return this.http.post<void>(this.urlAPI+'/remove/'+id, {})
     .toPromise();
   }
 

@@ -8,11 +8,11 @@ import { Game } from '../Classes/Game';
 
 @Injectable()
 export class GameService {
-  private urlAPI:string = 'http://localhost:8000/user';
+  private urlAPI:string = 'http://localhost:8000/game';
   constructor(private http:HttpClient) { }
 
   getAllGame(token):Promise<Game[]> {
-    return this.http.post<Game[]>(this.urlAPI, {token})
+    return this.http.post<Game[]>(this.urlAPI + '/all', {token})
     .toPromise();
   }
 

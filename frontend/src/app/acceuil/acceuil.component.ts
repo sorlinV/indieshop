@@ -13,6 +13,7 @@ export class AcceuilComponent implements OnInit {
 
   ngOnInit() {
     this.game.getAllGame(this.session.getSession().token).then((games)=>{
+      console.log(games);
       this.games = games;
     });
   }

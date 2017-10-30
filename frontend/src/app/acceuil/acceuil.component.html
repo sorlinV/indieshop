@@ -1,8 +1,7 @@
 <article class="game-all">
     <ul *ngFor="let game of games">
-        <li>game.name</li>
-        <li>game.price</li>
-        <li>game.desc</li>
-        <li>game.creators[0].username</li>
+        <li>name = {{game.name}}</li>
+        <li>price = {{game.price}}</li>
+        <li>description = {{game.description}}</li>
     </ul>
 </article>

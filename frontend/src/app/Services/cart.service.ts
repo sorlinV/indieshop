@@ -7,7 +7,7 @@ import { SessionService } from './session.service';
 import { Cart } from '../Classes/Cart';
 
 @Injectable()
-export class GameService {
+export class CartService {
   private urlAPI:string = 'http://localhost:8000/user';
   constructor(private http:HttpClient) { }
 

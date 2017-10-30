@@ -20,6 +20,9 @@ import { AdminComponent } from './admin/admin.component';
 import { ManageuserComponent } from './admin/manageuser/manageuser.component';
 import { ManagegamesComponent } from './admin/managegames/managegames.component';
 import { ManagereportComponent } from './admin/managereport/managereport.component';
+import { RateService } from './Services/rate.service';
+import { GameService } from './Services/game.service';
+import { CartService } from './Services/cart.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import { ManagereportComponent } from './admin/managereport/managereport.compone
   ],
   providers: [
     UserService,
-    SessionService
+    SessionService,
+    CartService,
+    GameService,
+    RateService
   ],
   bootstrap: [AppComponent]
 })

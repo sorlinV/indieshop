@@ -1,8 +1,9 @@
 <header>
-    <img src="assets/img/indiegame_logo.png" alt="logo indieshop" id="logo">
+    <a routerLink="store"><img src="assets/img/indiegame_logo.png" alt="logo indieshop" id="logo"></a>
     <nav>
         <main>
-            <ul> <!-- *ngIf="session.getSession().grade==='admin'" -->
+            <ul>
+                <!-- *ngIf="session.getSession().grade==='admin'" -->
                 <li>
                     <a routerLink="/manageuser" routerLinkActive="active">
                         <p>Manage Users</p>

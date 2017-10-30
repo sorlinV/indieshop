@@ -1,3 +1,8 @@
+header>a {
+    height: 100%;
+    width: 100%;
+}
+
 header {
     display: flex;
     justify-content: space-between;
@@ -41,7 +46,7 @@ header ul li {
     align-items: center;
 }
 
-header a {
+header ul a {
     display: flex;
     align-items: center;
     justify-content: center;

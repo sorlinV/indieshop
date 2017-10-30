@@ -25,7 +25,6 @@ export class RegisterComponent implements OnInit {
       if (this.form.password === this.form.password2) {
         this.userService.registerUser(this.form.username, this.form.mail, this.form.password)
         .then((user)=>{
-          console.log(user);
           this.session.login(user);
         });
       } else {
