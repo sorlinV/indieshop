@@ -3,6 +3,17 @@
         <li>name = {{game.name}}</li>
         <li>price = {{game.price}}</li>
         <li>description = {{game.description}}</li>
-        <li>description = {{game.description}}</li>
+        <li>
+            <ul>
+                <li *ngFor="let tag of game.tags">{{tag.name}}</li>
+            </ul>
+        </li>
+        <li>
+            <button (click)="rate(game.id, 1)">1</button>
+            <button (click)="rate(game.id, 2)">2</button>
+            <button (click)="rate(game.id, 3)">3</button>
+            <button (click)="rate(game.id, 4)">4</button>
+            <button (click)="rate(game.id, 5)">5</button>
+        </li>
     </ul>
 </article>

@@ -21,6 +21,10 @@ use JMS\Serializer\SerializationContext;
 class GameController extends Controller {
 
     private function jsonResponse ($obj, $group):Response {
+        if (gettype($obj) === 'string')
+        {
+            $obj = ["message" => $obj];
+        }
         $json = $this->get('jms_serializer')->serialize(
             $obj,
             "json"
@@ -30,6 +34,7 @@ class GameController extends Controller {
         $response->headers->set('Access-Control-Allow-Origin', '*');
         return $response;
     }
+
 
     /**
      * @Route("/add", name="gameAdd")
@@ -58,9 +63,9 @@ class GameController extends Controller {
             $em->persist($userDb);
             $em->persist($game);
             $em->flush();
-            return new Response('Game added');
+            return $this->jsonResponse('Game added', 'Default');
         }
-        return new Response('wrong body need: token, name, desc, price, tags');
+        return $this->jsonResponse('wrong body need: token, name, desc, price, tags', 'Default');
     }
 
     /**
@@ -86,7 +91,7 @@ class GameController extends Controller {
             $em->flush();
             return $this->jsonResponse($userDb, "token");
         }
-        return new Response('wrong body need: token, name, desc, price, tags');
+        return $this->jsonResponse('wrong body need: token, name, desc, price, tags', 'Default');
     }
 
     /**
@@ -110,11 +115,11 @@ class GameController extends Controller {
                     $em = $this->getDoctrine()->getManager();
                     $em->remove($userDb);
                     $em->flush();
-                    return new Response('Game deleted');
+                    return $this->jsonResponse('Game deleted', 'Default');
                 }
             }
         }
-        return new Response('wrong body need: token');
+        return $this->jsonResponse('wrong body need: token', 'Default');
     }
 
     /**
@@ -145,9 +150,9 @@ class GameController extends Controller {
             $em->persist($gameDb);
             $em->persist($userDb);
             $em->flush();
-            return new Response('user added to game');
+            return $this->jsonResponse('user added to game', 'Default');
         }
-        return new Response('wrong body need: token, usermail');
+        return $this->jsonResponse('wrong body need: token, usermail', 'Default');
     }
 
     /**
@@ -181,7 +186,7 @@ class GameController extends Controller {
                 ->findOneBy(["user_id" => $userDb->getId()]);
             return $this->jsonResponse($gamesDb, 'Default');
         }
-        return new Response('wrong body need: token');
+        return $this->jsonResponse('wrong body need: token', 'Default');
     }
 
     /**
