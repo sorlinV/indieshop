@@ -20,8 +20,11 @@ use JMS\Serializer\SerializationContext;
  * @Route("cart")
  */
 class CartController extends Controller {
-
     private function jsonResponse ($obj, $group):Response {
+        if (gettype($obj) === 'string')
+        {
+            $obj = ["message" => $obj];
+        }
         $json = $this->get('jms_serializer')->serialize(
             $obj,
             "json"
@@ -31,7 +34,6 @@ class CartController extends Controller {
         $response->headers->set('Access-Control-Allow-Origin', '*');
         return $response;
     }
-
 
     /**
      * @Route("/add", name="cartAdd")
@@ -55,9 +57,9 @@ class CartController extends Controller {
             $em->persist($userDb);
             $em->persist($gameDb);
             $em->flush();
-            return new Response('Rate added');
+            return $this->jsonResponse('Rate added', 'Default');
         }
-        return new Response('wrong body need: token, name, desc, price, tags');
+        return $this->jsonResponse('wrong body need: token, name, desc, price, tags', 'Default');
     }
 
     /**
@@ -86,9 +88,9 @@ class CartController extends Controller {
                 $em->persist($gameDb);
             }
             $em->flush();
-            return new Response('Rate added');
+            return $this->jsonResponse('Rate added', 'Default');
         }
-        return new Response('wrong body need: token, name, desc, price, tags');
+        return $this->jsonResponse('wrong body need: token, name, desc, price, tags', 'Default');
     }
 
     /**
@@ -111,8 +113,8 @@ class CartController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->remove($userDb);
             $em->flush();
-            return new Response('Rate deled');
+            return $this->jsonResponse('Rate deleted', 'Default');
         }
-        return new Response('wrong body need: token, name, desc, price, tags');
+        return $this->jsonResponse('wrong body need: token, name, desc, price, tags', 'Default');
     }
 }

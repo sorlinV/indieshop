@@ -23,6 +23,10 @@ use JMS\Serializer\SerializationContext;
 class ReportController extends Controller {
 
     private function jsonResponse ($obj, $group):Response {
+        if (gettype($obj) === 'string')
+        {
+            $obj = ["message" => $obj];
+        }
         $json = $this->get('jms_serializer')->serialize(
             $obj,
             "json"
@@ -54,9 +58,9 @@ class ReportController extends Controller {
             $em->persist($gameDb);
             $em->persist($report);
             $em->flush();
-            return new Response('Report added');
+            return $this->jsonResponse('Report added', 'Default');
         }
-        return new Response('wrong body need: token, name, desc, price, tags');
+        return $this->jsonResponse('wrong body need: token, name, desc, price, tags', 'Default');
     }
 
     /**
@@ -80,9 +84,9 @@ class ReportController extends Controller {
                 $em->remove($reportDb);
                 $em->flush();
             }
-            return new Response('Report delete');
+            return $this->jsonResponse('Report delete', 'Default');
         }
-        return new Response('wrong body need: token');
+        return $this->jsonResponse('wrong body need: token', 'Default');
     }
 
     /**
@@ -104,9 +108,9 @@ class ReportController extends Controller {
                     ->findAll();
                 return $this->jsonResponse($reportsDb, "Default");
             } else {
-                return new Response('you are not an admin !');
+                return $this->jsonResponse('you are not an admin !', 'Default');
             }
         }
-        return new Response('wrong body need: token');
+        return $this->jsonResponse('wrong body need: token', 'Default');
     }
 }

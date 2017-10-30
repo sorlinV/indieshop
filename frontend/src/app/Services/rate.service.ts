@@ -17,7 +17,7 @@ export class RateService {
         "game": game,
         "rate": rate
     };
-    return this.http.post<void>(this.urlAPI + 'add', data)
+    return this.http.post<void>(this.urlAPI + '/add', data)
     .toPromise();
   }
 

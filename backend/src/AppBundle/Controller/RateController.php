@@ -22,6 +22,10 @@ use JMS\Serializer\SerializationContext;
 class RateController extends Controller {
 
     private function jsonResponse ($obj, $group):Response {
+        if (gettype($obj) === 'string')
+        {
+            $obj = ["message" => $obj];
+        }
         $json = $this->get('jms_serializer')->serialize(
             $obj,
             "json"
@@ -41,6 +45,7 @@ class RateController extends Controller {
     public function rateAdd(Request $req):Response
     {
         $post = json_decode($req->getContent());
+        return $this->jsonResponse('Rate added', 'Default');
         if (!empty($post->token) && !empty($post->game) && !empty($post->rate)) {
             $em = $this->getDoctrine()->getManager();
             $userDb = $this->getDoctrine()
@@ -56,9 +61,9 @@ class RateController extends Controller {
             $em->persist($userDb);
             $em->persist($gameDb);
             $em->flush();
-            return new Response('Rate added');
+            return $this->jsonResponse('Rate added', 'Default');
         }
-        return new Response('wrong body need: token, name, desc, price, tags');
+        return $this->jsonResponse('wrong body need: token, name, desc, price, tags', 'Default');
     }
 
     /**
@@ -82,8 +87,8 @@ class RateController extends Controller {
                 $em->remove($rateDb);
                 $em->flush();
             }
-            return new Response('Rate added');
+            return $this->jsonResponse('Rate added', 'Default');
         }
-        return new Response('wrong body need: token, name, desc, price, tags');
+        return $this->jsonResponse('wrong body need: token, name, desc, price, tags', 'Default');
     }
 }
