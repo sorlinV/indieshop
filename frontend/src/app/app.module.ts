@@ -18,6 +18,8 @@ import { RegisterComponent } from './register/register.component';
 import { SessionService } from './Services/session.service';
 import { AdminComponent } from './admin/admin.component';
 import { ManageuserComponent } from './admin/manageuser/manageuser.component';
+import { ManagegamesComponent } from './admin/managegames/managegames.component';
+import { ManagereportComponent } from './admin/managereport/managereport.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { ManageuserComponent } from './admin/manageuser/manageuser.component';
     LoginComponent,
     RegisterComponent,
     AdminComponent,
-    ManageuserComponent
+    ManageuserComponent,
+    ManagegamesComponent,
+    ManagereportComponent
   ],
   imports: [
     BrowserModule,

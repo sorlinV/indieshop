@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../Services/user.service';
+
 
 @Component({
   selector: 'app-manageuser',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageuserComponent implements OnInit {
 
-  constructor() { }
+  constructor(private user:UserService) {}
 
   ngOnInit() {
+    this.user.getAllUser()
   }
 
 }
