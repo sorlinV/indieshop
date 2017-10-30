@@ -27,6 +27,7 @@ class GameController extends Controller {
             ,SerializationContext::create()->setGroups(array($group))
         );
         $response = new JsonResponse($json, 200, [], true);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
         return $response;
     }
 

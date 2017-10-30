@@ -20,14 +20,18 @@ use JMS\Serializer\SerializationContext;
  */
 class UserController extends Controller {
 
-
     private function jsonResponse ($obj, $group):Response {
+        if (gettype($obj) === 'string')
+        {
+            $obj = ["message" => $obj];
+        }
         $json = $this->get('jms_serializer')->serialize(
             $obj,
             "json"
             ,SerializationContext::create()->setGroups(array($group))
         );
         $response = new JsonResponse($json, 200, [], true);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
         return $response;
     }
 
@@ -84,7 +88,7 @@ class UserController extends Controller {
             }
             return $this->jsonResponse($userDb, "token");
         }
-        return new Response('wrong body need: usermail, password');
+        return $this->jsonResponse('wrong body need: usermail, password', 'normal');
     }
 
 
@@ -133,10 +137,10 @@ class UserController extends Controller {
                 $em->flush();
                 return $this->jsonResponse($u, "token");
             } else {
-                return new Response('User already in use');
+                return $this->jsonResponse('User already in use', 'normal');
             }
         }
-        return new Response('wrong from or request for register');
+        return $this->jsonResponse('wrong from or request for register', 'normal');
     }
 
 
@@ -161,12 +165,12 @@ class UserController extends Controller {
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($userDb);
                 $em->flush();
-                return new Response('User remove');
+                return $this->jsonResponse('User remove', 'normal');
             } else {
-                return new Response('Wrong password or username');
+                return $this->jsonResponse('Wrong password or username', 'normal');
             }
         }
-        return new Response('Wrong form or request');
+        return $this->jsonResponse('Wrong form or request', 'normal');
     }
 
     /**
@@ -192,7 +196,7 @@ class UserController extends Controller {
                 if (empty($tmpUser)) {
                     $userDb->setUsername($post['username']);
                 } else {
-                    return new Response('Username already in use');
+                    return $this->jsonResponse('Username already in use', 'normal');
                 }
             }
             if (!empty($post['password'])) {
@@ -216,6 +220,6 @@ class UserController extends Controller {
             $em->flush();
             return $this->jsonResponse($userDb, "token");
         }
-        return new Response('Username already in use');
+        return $this->jsonResponse('Username already in use', 'normal');
     }
 }
