@@ -1,3 +1,6 @@
-<p>
-  managereport works!
-</p>
+<article class="report-all">
+  <ul *ngFor="let report of reports">
+      <li>username = {{report.title}}</li>
+      <li>mail = {{report.description}}</li>
+  </ul>
+</article>

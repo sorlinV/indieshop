@@ -8,11 +8,11 @@ import { Report } from '../Classes/Report';
 
 @Injectable()
 export class ReportService {
-  private urlAPI:string = 'http://localhost:8000/user';
+  private urlAPI:string = 'http://localhost:8000/report';
   constructor(private http:HttpClient) { }
 
   getAllReport(token):Promise<Report[]> {
-    return this.http.post<Report[]>(this.urlAPI, {token})
+    return this.http.post<Report[]>(this.urlAPI + '/all', {token})
     .toPromise();
   }
 

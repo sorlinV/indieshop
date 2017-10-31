@@ -23,6 +23,7 @@ import { ManagereportComponent } from './admin/managereport/managereport.compone
 import { RateService } from './Services/rate.service';
 import { GameService } from './Services/game.service';
 import { CartService } from './Services/cart.service';
+import { ReportService } from './Services/report.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { CartService } from './Services/cart.service';
     SessionService,
     CartService,
     GameService,
-    RateService
+    RateService,
+    ReportService
   ],
   bootstrap: [AppComponent]
 })
