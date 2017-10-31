@@ -1,0 +1,18 @@
+AppBundle\Entity\Rate:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: ["Default"]
+        game:
+            expose: true
+            groups: ["Default"]
+        user:
+            expose: true
+            groups: ["Default"]
+        rate:
+            expose: true
+            groups: ["Default"]
+        date:
+            expose: true
+            groups: ["Default"]

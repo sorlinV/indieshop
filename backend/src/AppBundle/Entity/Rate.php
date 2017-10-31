@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Rate
@@ -53,7 +52,7 @@ class Rate
         $this->user = $user;
         $this->game = $game;
         $this->rate = $rate;
-        $this->date = new DateTime();
+        $this->date = new \DateTime();
     }
 
     /**

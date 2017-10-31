@@ -62,7 +62,32 @@ class RateController extends Controller {
             $em->flush();
             return $this->jsonResponse('Rate added', 'Default');
         }
-        return $this->jsonResponse('wrong body need: token, name, desc, price, tags', 'Default');
+        return $this->jsonResponse('wrong body need: token, game, rate', 'Default');
+    }
+
+    /**
+     * @Route("/one", name="rateOne")
+     * @Method("POST")
+     * @param Request $req
+     * @return Response
+     */
+    public function rateOne(Request $req):Response
+    {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token) && !empty($post->game)) {
+            $em = $this->getDoctrine()->getManager();
+            $userDb = $this->getDoctrine()
+                ->getRepository(User::class)
+                ->findOneBy(["token"=>$post->token]);
+            $gameDb = $this->getDoctrine()
+                ->getRepository(Game::class)
+                ->findOneBy(["id"=>$post->game]);
+            $rateDb = $this->getDoctrine()
+                ->getRepository(Rate::class)
+                ->findOneBy(["game"=>$gameDb, "user"=>$userDb]);
+            return $this->jsonResponse($rateDb, 'Default');
+        }
+        return $this->jsonResponse('wrong body need: token, game', 'Default');
     }
 
     /**
@@ -86,7 +111,7 @@ class RateController extends Controller {
                 $em->remove($rateDb);
                 $em->flush();
             }
-            return $this->jsonResponse('Rate added', 'Default');
+            return $this->jsonResponse('Rate delete', 'Default');
         }
         return $this->jsonResponse('wrong body need: token, name, desc, price, tags', 'Default');
     }
