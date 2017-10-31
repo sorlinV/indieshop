@@ -12,7 +12,7 @@ export class UserService {
   constructor(private http:HttpClient) { }
 
   getAllUser():Promise<User[]> {
-    return this.http.post<User[]>(this.urlAPI, {})
+    return this.http.post<User[]>(this.urlAPI+'/all', {})
     .toPromise();
   }
 
