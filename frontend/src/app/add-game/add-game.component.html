@@ -1,0 +1,13 @@
+<form (submit)="addGame()">
+  <label for="name">Game name : </label>
+  <input name="name" [(ngModel)]="form.name" type="text">
+  <label for="name">Game description : </label>
+  <textarea name="desc" [(ngModel)]="form.desc" type="text"></textarea>
+  <label for="name">Game price : </label>
+  <input name="price" [(ngModel)]="form.price" type="number">
+  <label for="tags">Game tags(separate by ',') : </label>
+  <input name="tags" [(ngModel)]="form.tags" type="text" placeholder="exemple= TagA, TagB, TagC">
+  <label class="confirm">{{confirm}}</label>
+  <label class="error">{{error}}</label>
+  <input type="submit">
+</form>

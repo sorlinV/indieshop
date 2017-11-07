@@ -9,7 +9,8 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "json": "json-server --watch db.json"
+        "json": "json-server --watch db.json",
+        "api": "php ../backend/bin/console server:run"
     },
     "private": true,
     "dependencies": {

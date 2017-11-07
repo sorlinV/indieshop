@@ -24,6 +24,8 @@ import { RateService } from './Services/rate.service';
 import { GameService } from './Services/game.service';
 import { CartService } from './Services/cart.service';
 import { ReportService } from './Services/report.service';
+import { AddGameComponent } from './add-game/add-game.component';
+import { InfoGameComponent } from './info-game/info-game.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { ReportService } from './Services/report.service';
     AdminComponent,
     ManageuserComponent,
     ManagegamesComponent,
-    ManagereportComponent
+    ManagereportComponent,
+    AddGameComponent,
+    InfoGameComponent
   ],
   imports: [
     BrowserModule,

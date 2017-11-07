@@ -6,12 +6,16 @@ import { ProfilComponent } from "./profil/profil.component";
 import { ManageuserComponent } from "./admin/manageuser/manageuser.component";
 import { ManagegamesComponent } from "./admin/managegames/managegames.component";
 import { ManagereportComponent } from "./admin/managereport/managereport.component";
+import { AddGameComponent } from "./add-game/add-game.component";
+import { InfoGameComponent } from "./info-game/info-game.component";
 
-export const appRoutes:Routes = [  
+export const appRoutes:Routes = [
+    {path: 'addgame', component: AddGameComponent},
     {path: 'managereport', component: ManagereportComponent },
     {path: 'managegames', component: ManagegamesComponent },
     {path: 'manageuser', component: ManageuserComponent},
     {path: 'games', component: GamesComponent},
+    {path: 'infogame/:id', component: InfoGameComponent},
     {path: 'profil/:id', component: ProfilComponent},
     {path: 'store', component: AcceuilComponent},
     {path: '', pathMatch: 'full', component: AcceuilComponent},

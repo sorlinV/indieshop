@@ -5,6 +5,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/merge';
 import { SessionService } from './session.service';
 import { Game } from '../Classes/Game';
+import { Mess } from '../Classes/Mess';
 
 @Injectable()
 export class GameService {
@@ -16,14 +17,15 @@ export class GameService {
     .toPromise();
   }
 
-  addGame(token, name, desc, price):Promise<void> {
+  addGame(token, name, desc, price, tags):Promise<Mess> {
     let data = {
         "token": token,
         "name": name,
         "desc": desc,
-        "price": price
+        "price": price,
+        "tags": tags
     };
-    return this.http.post<void>(this.urlAPI + '/add', data)
+    return this.http.post<Mess>(this.urlAPI + '/add', data)
     .toPromise();
   }
 
@@ -38,16 +40,16 @@ export class GameService {
     .toPromise();
   }
 
-  removeGame(id, token): Promise<void> {
+  removeGame(id, token): Promise<Mess> {
     let data = {
         "token": token
     }
-    return this.http.post<void>(this.urlAPI+'/remove/'+id, data)
+    return this.http.post<Mess>(this.urlAPI+'/remove/'+id, data)
     .toPromise();
   }
 
-  getGame(id): Promise<void> {
-    return this.http.post<void>(this.urlAPI+'/one/'+id, {})
+  getGame(id): Promise<Mess> {
+    return this.http.post<Mess>(this.urlAPI+'/one/'+id, {})
     .toPromise();
   }
 
