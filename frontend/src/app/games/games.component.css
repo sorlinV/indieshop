@@ -1,0 +1,23 @@
+.library {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+aside {
+    width: 15vw;
+    background: black;
+    overflow-y: scroll;
+    color: white;
+    max-height: calc(100vh - 6em);
+}
+
+aside > ul:nth-child(odd){
+    background: rgb(54, 54, 54);
+}
+
+aside ul li {
+    width: 100%;
+    cursor:pointer;
+    height: 1.5em;
+}

@@ -1,3 +1,24 @@
-<p>
-  info-game works!
-</p>
+<ul *ngIf="_game != null">
+  <li>id = {{_game.id}}</li>
+  <li>name = {{_game.name}}</li>
+  <li>price = {{_game.price}}</li>
+  <li>description = {{_game.description}}</li>
+  <li>note total = {{moyRate(_game)}}</li>
+  <li>
+      <ul>
+          <li *ngFor="let tag of _game.tags">{{tag.name}}</li>
+      </ul>
+  </li>
+  <li *ngIf="session.getSession() !== null && getRate(_game, session.getSession().username) === false">
+      <div *ngFor="let i of [1, 2, 3, 4, 5]" (click)="rate(_game.id, i)">
+          <button class="empty-star">{{i}}</button>
+      </div>
+  </li>
+  <li *ngIf="session.getSession() !== null && getRate(_game, session.getSession().username)">
+      <div *ngFor="let i of [1, 2, 3, 4, 5]">
+          <button (click)="editRate(getRate(_game, session.getSession().username).id, _game.id, i)" *ngIf="getRate(_game, session.getSession().username).rate < i" class="empty-star">{{i}}</button>
+          <button (click)="unRate(getRate(_game, session.getSession().username).id)" *ngIf="getRate(_game, session.getSession().username).rate === i" class="star">A{{i}}</button>
+          <button (click)="editRate(getRate(_game, session.getSession().username).id, _game.id, i)" *ngIf="getRate(_game, session.getSession().username).rate > i" class="star">A{{i}}</button>
+      </div>
+  </li>
+</ul>

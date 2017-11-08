@@ -1,3 +1,8 @@
-<p>
-  games works!
-</p>
+<div class="library">
+    <aside>
+        <ul *ngFor="let game of games">
+            <li (click)="game_select = game">{{game.name}}</li>
+        </ul>
+    </aside>
+    <app-info-game [game]="game_select"></app-info-game>
+</div>
