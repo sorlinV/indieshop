@@ -16,8 +16,9 @@ export class ProfilComponent implements OnInit {
   constructor(private route:ActivatedRoute, private userService:UserService, private session:SessionService) { }
 
   getUser() {
+    this.user = this.session.getSession();
     this.route.params.subscribe((params) => {
-      this.userService.getUser(params.username).then((user)=>{
+      this.userService.getUser(params.id).then((user)=>{
         this.user = user;
         this.form = {
           username: this.user.username,
@@ -39,7 +40,7 @@ export class ProfilComponent implements OnInit {
       this.form.pass !== "" &&
       this.form.pass2 !== "") {
         this.route.params.subscribe((params) => {
-          this.userService.editUser(this.session.getSession().token, params.username, this.form.username, this.form.mail, this.form.pass)
+          this.userService.editUser(this.session.getSession().token, params.id, this.form.username, this.form.mail, this.form.pass)
         .then(this.getUser);
       });  
     }

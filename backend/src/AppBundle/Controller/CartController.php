@@ -63,6 +63,27 @@ class CartController extends Controller {
     }
 
     /**
+     * @Route("/games", name="cartGames")
+     * @Method("POST")
+     * @param Request $req
+     * @return Response
+     */
+    public function cartGames(Request $req):Response
+    {
+        $post = json_decode($req->getContent());
+        if (!empty($post->token)) {
+            $userDb = $this->getDoctrine()
+                ->getRepository(User::class)
+                ->findOneBy(["token"=>$post->token]);
+            $cartDb= $this->getDoctrine()
+                ->getRepository(Cart::class)
+                ->findOneBy(["id"=>$userDb->getId()]);
+            return $this->jsonResponse($cartDb->getGames(), 'Default');
+        }
+        return $this->jsonResponse('wrong body need: token, name, desc, price, tags', 'Default');
+    }
+
+    /**
      * @Route("/buy", name="cartBuy")
      * @Method("POST")
      * @param Request $req

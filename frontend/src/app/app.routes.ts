@@ -8,6 +8,7 @@ import { ManagegamesComponent } from "./admin/managegames/managegames.component"
 import { ManagereportComponent } from "./admin/managereport/managereport.component";
 import { AddGameComponent } from "./add-game/add-game.component";
 import { InfoGameComponent } from "./info-game/info-game.component";
+import { CartComponent } from "./cart/cart.component";
 
 export const appRoutes:Routes = [
     {path: 'addgame', component: AddGameComponent},
@@ -18,6 +19,7 @@ export const appRoutes:Routes = [
     {path: 'infogame/:id', component: InfoGameComponent},
     {path: 'profil/:id', component: ProfilComponent},
     {path: 'store', component: AcceuilComponent},
+    {path: 'cart', component: CartComponent},
     {path: '', pathMatch: 'full', component: AcceuilComponent},
     {path: '**', component: NotfoundComponent}
 ]

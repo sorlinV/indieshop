@@ -15,8 +15,8 @@
     </form>
 </article>
 <article *ngIf="is_editing === false">
-    <p>{{user.username}}</p>
-    <p>{{user.mail}}</p>
+    <p>username = {{user.username}}</p>
+    <p>mail = {{user.mail}}</p>
     <input (click)="is_editing = true" type="submit" value="Edit" />
     <input (click)="remove()" type="submit" value="Remove" />
 </article>

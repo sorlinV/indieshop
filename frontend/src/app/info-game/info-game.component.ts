@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../Services/user.service';
 import { Game } from '../Classes/Game';
 import { RateService } from '../Services/rate.service';
+import { CartService } from '../Services/cart.service';
 
 @Component({
   selector: 'app-info-game',

@@ -9,6 +9,7 @@
           <li *ngFor="let tag of _game.tags">{{tag.name}}</li>
       </ul>
   </li>
+  <button (click)="cartSession.addCart(token, _game.id)">BUY</button>
   <li *ngIf="session.getSession() !== null && getRate(_game, session.getSession().username) === false">
       <div *ngFor="let i of [1, 2, 3, 4, 5]" (click)="rate(_game.id, i)">
           <button class="empty-star">{{i}}</button>

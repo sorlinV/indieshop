@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/merge';
-import { SessionService } from './session.service';
 import { Cart } from '../Classes/Cart';
+import { Game } from '../Classes/Game';
 
 @Injectable()
+@Injectable()
 export class CartService {
-  private urlAPI:string = 'http://localhost:8000/user';
+  private urlAPI:string = 'http://localhost:8000/cart';
   constructor(private http:HttpClient) { }
 
   addCart(token, game):Promise<void> {
@@ -17,6 +18,14 @@ export class CartService {
         "game": game
     };
     return this.http.post<void>(this.urlAPI + '/add', data)
+    .toPromise();
+  }
+
+  getCart(token):Promise<Game[]> {
+    let data = {
+        "token": token
+    };
+    return this.http.post<Game[]>(this.urlAPI + '/games', data)
     .toPromise();
   }
 
